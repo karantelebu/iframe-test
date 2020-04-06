@@ -11,10 +11,12 @@
     <h1>hello</h1>
     <iframe src="./iframe.html" frameborder="0"></iframe>
     <script>
-        window.onmessage = function (e) {
-            if (e.data == 'hello') {
+        window.onmessage = function (event) {
+            if (event.data == 'hello') {
                 alert('It works!');
+                event.source.window.postMessage({type:'helloChild',payload:'Hello Iframe'}, '*')
             }
+            
         };
     </script>
 </body>
