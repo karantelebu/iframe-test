@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>hello</h1>
+    <button onclick="sayHello()">Start</button>
+    <button>End</button>
+    <iframe id="theFrame" height="600" src="https://localhost:4200/tabiib/Zs2SCX8C/doctor" frameborder="0" allow="geolocation; microphone; camera"></iframe>
+
+    <script>
+        let iframeEl = document.getElementById('theFrame').contentWindow;
+
+        iframeEl.postMessage({
+            type: "hellow",
+            payload: "john"
+        }, '*')
+
+        function sayHello() {
+            alert("clicked")
+            iframeEl.contentWindow.postMessage({
+                type: "hellow",
+                payload: "john"
+            }, '*')
+        }
+        window.onmessage = function(event) {
+            console.log("parent", event.data);
+
+            if (event.data == 'hello') {
+                alert('It works!');
+                // event.source.window.postMessage({
+                //     type: 'helloChild',
+                //     payload: 'Hello Iframe'
+                // }, '*')
+            }
+
+        };
+    </script>
+</body>
+
+</html>

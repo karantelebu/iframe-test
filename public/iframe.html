@@ -1,0 +1,46 @@
+<h2>I'm in iframe</h2>
+<video src="" id="videoItem"></video>
+<button onclick="handleBtnClick()">
+    Hello
+</button>
+<script>
+    window.onmessage = function(event) {
+        let data = event.data;
+        alert.log(data.type);
+
+        switch (data.type) {
+            case 'helloChild':
+                alert(data.payload)
+                break;
+
+            default:
+                break;
+        }
+
+    };
+
+    function handleBtnClick() {
+        window.top.postMessage('hello', '*')
+    }
+</script>
+<script>
+    const constraints = {
+        audio: true,
+        video: true
+    }
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+            /* use the stream */
+            let video = document.getElementById("videoItem");
+            //stream.getVideoTracks()[0]
+            video.srcObject = stream;
+            video.muted = true;
+            video.onloadedmetadata = function(e) {
+                video.play();
+            };
+        })
+        .catch(function(err) {
+            /* handle the error */
+            console.error(err);
+        });
+</script>
